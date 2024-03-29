@@ -17,7 +17,7 @@ public class Move implements Menu {
     @Override
     public void play(ChessGame chessGame, OutputView outputView) {
         chessGame.move(moving);
-        if (chessGame.isKingDie()) {
+        if (!chessGame.isNotEnd()) {
             return;
         }
         printCurrentStatus(chessGame, outputView);

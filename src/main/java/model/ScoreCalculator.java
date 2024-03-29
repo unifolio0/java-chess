@@ -14,8 +14,8 @@ public class ScoreCalculator {
 
     private final Map<Camp, Double> result;
 
-    public ScoreCalculator(Map<Position, Piece> board) {
-        result = calculateResult(board);
+    public ScoreCalculator(ChessBoard chessBoard) {
+        result = calculateResult(chessBoard.getBoard());
     }
 
     private Map<Camp, Double> calculateResult(Map<Position, Piece> board) {
