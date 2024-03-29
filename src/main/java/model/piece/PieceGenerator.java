@@ -10,18 +10,18 @@ public class PieceGenerator {
 
     static {
         CASH = new HashMap<>();
-        CASH.put("BISHOPBLACK", new Bishop(Camp.BLACK));
-        CASH.put("PAWNBLACK", new BlackPawn());
-        CASH.put("KINGBLACK", new King(Camp.BLACK));
-        CASH.put("QUEENBLACK", new Queen(Camp.BLACK));
-        CASH.put("ROOKBLACK", new Rook(Camp.BLACK));
-        CASH.put("KNIGHTBLACK", new Knight(Camp.BLACK));
-        CASH.put("BISHOPWHITE", new Bishop(Camp.WHITE));
-        CASH.put("PAWNWHITE", new WhitePawn());
-        CASH.put("KINGWHITE", new King(Camp.WHITE));
-        CASH.put("QUEENWHITE", new Queen(Camp.WHITE));
-        CASH.put("ROOKWHITE", new Rook(Camp.WHITE));
-        CASH.put("KNIGHTWHITE", new Knight(Camp.WHITE));
+        CASH.put("BISHOP_BLACK", new Bishop(Camp.BLACK));
+        CASH.put("PAWN_BLACK", new BlackPawn());
+        CASH.put("KING_BLACK", new King(Camp.BLACK));
+        CASH.put("QUEEN_BLACK", new Queen(Camp.BLACK));
+        CASH.put("ROOK_BLACK", new Rook(Camp.BLACK));
+        CASH.put("KNIGHT_BLACK", new Knight(Camp.BLACK));
+        CASH.put("BISHOP_WHITE", new Bishop(Camp.WHITE));
+        CASH.put("PAWN_WHITE", new WhitePawn());
+        CASH.put("KING_WHITE", new King(Camp.WHITE));
+        CASH.put("QUEEN_WHITE", new Queen(Camp.WHITE));
+        CASH.put("ROOK_WHITE", new Rook(Camp.WHITE));
+        CASH.put("KNIGHT_WHITE", new Knight(Camp.WHITE));
     }
 
     public static Piece getPiece(String input) {

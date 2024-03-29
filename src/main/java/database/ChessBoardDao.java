@@ -43,7 +43,7 @@ public class ChessBoardDao {
             final var resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 board.put(Position.from(resultSet.getString("board_column") + resultSet.getString("board_row")),
-                        PieceGenerator.getPiece(resultSet.getString("piece_type") + resultSet.getString("camp")));
+                        PieceGenerator.getPiece(resultSet.getString("piece_type") + "_" + resultSet.getString("camp")));
             }
             return board;
         } catch (final SQLException e) {
