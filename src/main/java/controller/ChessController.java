@@ -24,9 +24,8 @@ public class ChessController {
     }
 
     private void play(final ChessGame chessGame) {
-        Menu menu;
         while (chessGame.isNotEnd()) {
-            menu = Command.of(inputView.readCommandList());
+            Menu menu = Command.of(inputView.readCommandList());
             menu.play(chessGame, outputView);
         }
         outputView.printWinner(chessGame.calculateResult().getWinner());
