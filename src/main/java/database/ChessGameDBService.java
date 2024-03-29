@@ -2,7 +2,9 @@ package database;
 
 import dto.ChessGameDto;
 import model.Camp;
+import model.ChessBoard;
 import model.piece.Piece;
+import model.position.Moving;
 import model.position.Position;
 
 public class ChessGameDBService {
@@ -28,20 +30,30 @@ public class ChessGameDBService {
         chessGameDao.save(chessGameDto.camp());
     }
 
-    public void savePiece(Position position, Piece piece) {
+    private void savePiece(Position position, Piece piece) {
         chessBoardDao.save(position, piece);
     }
 
-    public void updatePiece(Position position, Piece piece) {
+    public void moveUpdate(ChessBoard chessBoard, Moving moving) {
+        Piece source = chessBoard.findPiece(moving.getCurrentPosition());
+        if (chessBoard.checkPosition(moving.getNextPosition())) {
+            updatePiece(moving.getNextPosition(), source);
+        } else {
+            savePiece(moving.getNextPosition(), source);
+        }
+        deletePiece(moving.getCurrentPosition());
+    }
+
+    private void updatePiece(Position position, Piece piece) {
         chessBoardDao.update(position, piece);
+    }
+
+    private void deletePiece(Position position) {
+        chessBoardDao.delete(position);
     }
 
     public void updateCamp(Camp camp) {
         chessGameDao.update(camp);
-    }
-
-    public void deletePiece(Position position) {
-        chessBoardDao.delete(position);
     }
 
     public void reset() {

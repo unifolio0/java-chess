@@ -41,14 +41,8 @@ public class ChessGame {
 
     public void move(Moving moving) {
         if (chessStatus == ChessStatus.RUNNING) {
-            Piece source = chessBoard.findPiece(moving.getCurrentPosition());
-            if (chessBoard.checkPosition(moving.getNextPosition())) {
-                chessGameDbService.updatePiece(moving.getNextPosition(), source);
-            } else {
-                chessGameDbService.savePiece(moving.getNextPosition(), source);
-            }
+            chessGameDbService.moveUpdate(chessBoard, moving);
             chessBoard.move(moving, camp);
-            chessGameDbService.deletePiece(moving.getCurrentPosition());
             checkKing();
             camp = camp.toggle();
             chessGameDbService.updateCamp(camp);
