@@ -1,7 +1,7 @@
 package controller.menu;
 
 import dto.GameBoardDto;
-import model.ChessGame;
+import model.game.ChessGame;
 import model.position.Moving;
 import model.position.Position;
 import view.OutputView;

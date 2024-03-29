@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.Set;
 import java.util.stream.Stream;
-import model.Camp;
+import model.game.Camp;
 import model.position.Moving;
 import model.position.Position;
 import org.junit.jupiter.api.DisplayName;

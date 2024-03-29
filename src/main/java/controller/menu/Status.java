@@ -1,7 +1,7 @@
 package controller.menu;
 
-import model.ChessGame;
-import model.ScoreCalculator;
+import model.game.ChessGame;
+import model.game.ScoreCalculator;
 import view.OutputView;
 
 public class Status implements Menu {

@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.HashMap;
 import java.util.Map;
+import model.game.Camp;
+import model.game.ChessBoard;
 import model.piece.King;
 import model.piece.Knight;
 import model.piece.Piece;

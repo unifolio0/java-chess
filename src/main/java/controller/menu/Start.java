@@ -1,7 +1,7 @@
 package controller.menu;
 
 import dto.GameBoardDto;
-import model.ChessGame;
+import model.game.ChessGame;
 import view.OutputView;
 
 public class Start implements Menu {

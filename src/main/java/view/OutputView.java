@@ -2,8 +2,8 @@ package view;
 
 import dto.GameBoardDto;
 import java.util.Map;
-import model.Camp;
-import model.Result;
+import model.game.Camp;
+import model.game.Result;
 
 public class OutputView {
 

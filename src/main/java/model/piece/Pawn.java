@@ -1,6 +1,6 @@
 package model.piece;
 
-import model.Camp;
+import model.game.Camp;
 
 public abstract class Pawn extends Piece {
 

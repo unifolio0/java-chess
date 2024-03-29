@@ -2,8 +2,8 @@ package controller;
 
 import controller.menu.Menu;
 import java.util.function.Consumer;
-import model.ChessGame;
-import model.Command;
+import model.game.ChessGame;
+import model.game.Command;
 import view.InputView;
 import view.OutputView;
 

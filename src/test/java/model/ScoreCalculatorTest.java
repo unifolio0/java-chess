@@ -5,6 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.HashMap;
 import java.util.Map;
+import model.game.Camp;
+import model.game.ChessBoard;
+import model.game.Result;
+import model.game.ScoreCalculator;
 import model.piece.Bishop;
 import model.piece.BlackPawn;
 import model.piece.King;

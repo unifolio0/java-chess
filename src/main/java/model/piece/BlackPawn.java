@@ -1,7 +1,7 @@
 package model.piece;
 
 import java.util.Set;
-import model.Camp;
+import model.game.Camp;
 import model.position.Moving;
 import model.position.Position;
 import model.position.Row;

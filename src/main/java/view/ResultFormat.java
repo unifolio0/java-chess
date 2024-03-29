@@ -1,7 +1,7 @@
 package view;
 
 import java.util.Arrays;
-import model.Result;
+import model.game.Result;
 
 public enum ResultFormat {
 

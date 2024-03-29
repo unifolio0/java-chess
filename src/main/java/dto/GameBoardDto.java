@@ -3,7 +3,7 @@ package dto;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
-import model.ChessGame;
+import model.game.ChessGame;
 import model.piece.Piece;
 import model.position.Column;
 import model.position.Position;

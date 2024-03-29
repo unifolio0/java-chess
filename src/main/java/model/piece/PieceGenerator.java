@@ -2,7 +2,7 @@ package model.piece;
 
 import java.util.HashMap;
 import java.util.Map;
-import model.Camp;
+import model.game.Camp;
 
 public class PieceGenerator {
 

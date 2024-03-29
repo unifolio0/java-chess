@@ -1,4 +1,4 @@
-package model;
+package model.game;
 
 import database.ChessGameDBService;
 import dto.ChessGameDto;

@@ -1,6 +1,6 @@
 package controller.menu;
 
-import model.ChessGame;
+import model.game.ChessGame;
 
 public class End implements Menu {
 

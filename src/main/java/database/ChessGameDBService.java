@@ -1,8 +1,8 @@
 package database;
 
 import dto.ChessGameDto;
-import model.Camp;
-import model.ChessBoard;
+import model.game.Camp;
+import model.game.ChessBoard;
 import model.piece.Piece;
 import model.position.Moving;
 import model.position.Position;
