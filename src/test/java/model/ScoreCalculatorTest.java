@@ -53,7 +53,7 @@ class ScoreCalculatorTest {
         board.put(new Position(Column.E, Row.ONE), new Rook(Camp.WHITE));
         board.put(new Position(Column.F, Row.ONE), new King(Camp.WHITE));
 
-        ScoreCalculator scoreCalculator = new ScoreCalculator(board);
+        ScoreCalculator scoreCalculator = new ScoreCalculator(new ChessBoard(board));
         Map<Camp, Double> gameResult = scoreCalculator.getResult();
 
         double blackScore = gameResult.get(Camp.BLACK);
@@ -100,7 +100,7 @@ class ScoreCalculatorTest {
         board.put(new Position(Column.E, Row.ONE), new Rook(Camp.WHITE));
         board.put(new Position(Column.F, Row.ONE), new King(Camp.WHITE));
 
-        ScoreCalculator scoreCalculator = new ScoreCalculator(board);
+        ScoreCalculator scoreCalculator = new ScoreCalculator(new ChessBoard(board));
         Map<Camp, Double> gameResult = scoreCalculator.getResult();
 
         double blackScore = gameResult.get(Camp.BLACK);
@@ -145,7 +145,7 @@ class ScoreCalculatorTest {
         board.put(new Position(Column.E, Row.ONE), new Rook(Camp.WHITE));
         board.put(new Position(Column.F, Row.ONE), new King(Camp.WHITE));
 
-        ScoreCalculator scoreCalculator = new ScoreCalculator(board);
+        ScoreCalculator scoreCalculator = new ScoreCalculator(new ChessBoard(board));
         Map<Camp, Double> gameResult = scoreCalculator.getResult();
 
         double blackScore = gameResult.get(Camp.BLACK);

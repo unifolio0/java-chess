@@ -37,13 +37,13 @@ public class ChessBoard {
 
     private final Map<Position, Piece> board;
 
-    public ChessBoard(Map<Position, Piece> board) {
-        this.board = board;
-    }
-
     public ChessBoard() {
         this.board = new HashMap<>();
         setting();
+    }
+
+    public ChessBoard(Map<Position, Piece> board) {
+        this.board = board;
     }
 
     private void setting() {
