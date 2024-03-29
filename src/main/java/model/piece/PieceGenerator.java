@@ -24,6 +24,10 @@ public class PieceGenerator {
         CASH.put("KNIGHT_WHITE", new Knight(Camp.WHITE));
     }
 
+    private PieceGenerator() {
+
+    }
+
     public static Piece getPiece(String input) {
         if (CASH.containsKey(input)) {
             return CASH.get(input);
