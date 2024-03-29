@@ -1,7 +1,6 @@
 package model;
 
-import database.DBConnection;
-import database.DBService;
+import database.ChessGameDBService;
 import dto.ChessGameDto;
 import java.util.Map;
 import model.piece.Piece;
@@ -10,16 +9,16 @@ import model.position.Position;
 
 public class ChessGame {
 
-    private final DBService dbService;
+    private final ChessGameDBService chessGameDbService;
     private ChessStatus chessStatus;
     private ChessBoard chessBoard;
     private Camp camp;
 
     public ChessGame() {
-        this.dbService = new DBService();
+        this.chessGameDbService = new ChessGameDBService();
         this.chessStatus = ChessStatus.INIT;
-        if (dbService.isContinue()) {
-            ChessGameDto chessGameDto = dbService.reload();
+        if (chessGameDbService.isContinue()) {
+            ChessGameDto chessGameDto = chessGameDbService.reload();
             this.chessBoard = new ChessBoard(chessGameDto.board());
             this.camp = chessGameDto.camp();
             return;
@@ -30,11 +29,11 @@ public class ChessGame {
     public void start() {
         if (chessStatus == ChessStatus.INIT) {
             chessStatus = ChessStatus.RUNNING;
-            if (dbService.isContinue()) {
+            if (chessGameDbService.isContinue()) {
                 return;
             }
             this.camp = Camp.WHITE;
-            dbService.saveAll(new ChessGameDto(chessBoard.getBoard(), camp));
+            chessGameDbService.saveAll(new ChessGameDto(chessBoard.getBoard(), camp));
             return;
         }
         throw new IllegalArgumentException("이미 게임이 진행중입니다.");
@@ -44,15 +43,15 @@ public class ChessGame {
         if (chessStatus == ChessStatus.RUNNING) {
             Piece source = chessBoard.findPiece(moving.getCurrentPosition());
             if (chessBoard.checkPosition(moving.getNextPosition())) {
-                dbService.updatePiece(moving.getNextPosition(), source);
+                chessGameDbService.updatePiece(moving.getNextPosition(), source);
             } else {
-                dbService.savePiece(moving.getNextPosition(), source);
+                chessGameDbService.savePiece(moving.getNextPosition(), source);
             }
             chessBoard.move(moving, camp);
-            dbService.deletePiece(moving.getCurrentPosition());
+            chessGameDbService.deletePiece(moving.getCurrentPosition());
             checkKing();
             camp = camp.toggle();
-            dbService.updateCamp(camp);
+            chessGameDbService.updateCamp(camp);
             return;
         }
         throw new IllegalArgumentException("start를 입력해야 게임이 시작됩니다.");
@@ -60,7 +59,7 @@ public class ChessGame {
 
     private void checkKing() {
         if (chessBoard.isKingDie()) {
-            dbService.reset();
+            chessGameDbService.reset();
             end();
         }
     }

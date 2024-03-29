@@ -5,12 +5,12 @@ import model.Camp;
 import model.piece.Piece;
 import model.position.Position;
 
-public class DBService {
+public class ChessGameDBService {
 
     private final ChessBoardDao chessBoardDao;
     private final ChessGameDao chessGameDao;
 
-    public DBService() {
+    public ChessGameDBService() {
         this.chessBoardDao = new ChessBoardDao();
         this.chessGameDao = new ChessGameDao();
     }
