@@ -10,8 +10,8 @@ import model.position.Position;
 public class ChessGame {
 
     private final ChessGameDBService chessGameDbService;
+    private final ChessBoard chessBoard;
     private ChessStatus chessStatus;
-    private ChessBoard chessBoard;
     private Camp camp;
 
     public ChessGame() {
