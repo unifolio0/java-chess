@@ -15,16 +15,16 @@ public class Move implements Menu {
     }
 
     @Override
-    public void play(ChessGame chessGame, OutputView outputView) {
+    public void play(ChessGame chessGame) {
         chessGame.move(moving);
         if (!chessGame.isNotEnd()) {
             return;
         }
-        printCurrentStatus(chessGame, outputView);
+        printCurrentStatus(chessGame);
     }
 
-    private void printCurrentStatus(final ChessGame chessGame, final OutputView outputView) {
-        outputView.printGameBoard(GameBoardDto.from(chessGame));
-        outputView.printCurrentCame(chessGame.getCamp());
+    private void printCurrentStatus(final ChessGame chessGame) {
+        OutputView.printGameBoard(GameBoardDto.from(chessGame));
+        OutputView.printCurrentCame(chessGame.getCamp());
     }
 }

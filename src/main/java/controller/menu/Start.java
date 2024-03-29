@@ -7,13 +7,13 @@ import view.OutputView;
 public class Start implements Menu {
 
     @Override
-    public void play(ChessGame chessGame, OutputView outputView) {
+    public void play(ChessGame chessGame) {
         chessGame.start();
-        printCurrentStatus(chessGame, outputView);
+        printCurrentStatus(chessGame);
     }
 
-    private void printCurrentStatus(final ChessGame chessGame, final OutputView outputView) {
-        outputView.printGameBoard(GameBoardDto.from(chessGame));
-        outputView.printCurrentCame(chessGame.getCamp());
+    private void printCurrentStatus(final ChessGame chessGame) {
+        OutputView.printGameBoard(GameBoardDto.from(chessGame));
+        OutputView.printCurrentCame(chessGame.getCamp());
     }
 }

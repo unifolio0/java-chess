@@ -7,9 +7,9 @@ import view.OutputView;
 public class Status implements Menu {
 
     @Override
-    public void play(ChessGame chessGame, OutputView outputView) {
+    public void play(ChessGame chessGame) {
         ScoreCalculator scoreCalculator = chessGame.status();
-        outputView.printResult(scoreCalculator.getResult());
-        outputView.printWinner(scoreCalculator.getWinner());
+        OutputView.printResult(scoreCalculator.getResult());
+        OutputView.printWinner(scoreCalculator.getWinner());
     }
 }
