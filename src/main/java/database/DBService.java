@@ -1,7 +1,6 @@
 package database;
 
 import dto.ChessGameDto;
-import java.sql.Connection;
 import model.Camp;
 import model.piece.Piece;
 import model.position.Position;
@@ -11,9 +10,9 @@ public class DBService {
     private final ChessBoardDao chessBoardDao;
     private final ChessGameDao chessGameDao;
 
-    public DBService(Connection connection) {
-        this.chessBoardDao = new ChessBoardDao(connection);
-        this.chessGameDao = new ChessGameDao(connection);
+    public DBService() {
+        this.chessBoardDao = new ChessBoardDao();
+        this.chessGameDao = new ChessGameDao();
     }
 
     public ChessGameDto reload() {
@@ -21,7 +20,7 @@ public class DBService {
     }
 
     public boolean isContinue() {
-        return chessGameDao.find() != null;
+        return chessGameDao.find().describeConstable().isPresent();
     }
 
     public void saveAll(ChessGameDto chessGameDto) {

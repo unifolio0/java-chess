@@ -16,7 +16,7 @@ public class ChessGame {
     private Camp camp;
 
     public ChessGame() {
-        this.dbService = new DBService(DBConnection.getConnection());
+        this.dbService = new DBService();
         this.chessStatus = ChessStatus.INIT;
         if (dbService.isContinue()) {
             ChessGameDto chessGameDto = dbService.reload();

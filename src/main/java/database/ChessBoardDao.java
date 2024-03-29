@@ -14,19 +14,14 @@ public class ChessBoardDao {
 
     private static final String TABLE = "chessboard";
 
-    private final Connection connection;
-
-    public ChessBoardDao(Connection connection) {
-        this.connection = connection;
-    }
-
     public void saveAll(Map<Position, Piece> board) {
         board.forEach(this::save);
     }
 
     public void save(Position position, Piece piece) {
         final String query = "INSERT INTO " + TABLE + " VALUES(?, ?, ?, ?)";
-        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (final Connection connection = DBConnection.getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, position.getColumn().getValue());
             preparedStatement.setString(2, position.getRow().getValue());
             preparedStatement.setString(3, piece.getPieceType().name());
@@ -39,7 +34,8 @@ public class ChessBoardDao {
 
     public Map<Position, Piece> findAll() {
         final String query = "SELECT * FROM " + TABLE;
-        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (final Connection connection = DBConnection.getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             Map<Position, Piece> board = new HashMap<>();
             final ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -55,7 +51,8 @@ public class ChessBoardDao {
     public void update(Position position, Piece piece) {
         final String query =
                 "UPDATE " + TABLE + " SET piece_type = ?, camp = ? WHERE board_column = ? AND board_row = ?";
-        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (final Connection connection = DBConnection.getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, piece.getPieceType().name());
             preparedStatement.setString(2, piece.getCamp().name());
             preparedStatement.setString(3, position.getColumn().getValue());
@@ -68,7 +65,8 @@ public class ChessBoardDao {
 
     public void deleteAll() {
         final String query = "DELETE FROM " + TABLE;
-        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (final Connection connection = DBConnection.getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
@@ -77,7 +75,8 @@ public class ChessBoardDao {
 
     public void delete(Position position) {
         final String query = "DELETE FROM " + TABLE + " WHERE board_column = ? AND board_row = ?";
-        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (final Connection connection = DBConnection.getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, position.getColumn().getValue());
             preparedStatement.setString(2, position.getRow().getValue());
             preparedStatement.executeUpdate();
