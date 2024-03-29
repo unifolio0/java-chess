@@ -10,6 +10,7 @@ import model.piece.Knight;
 import model.piece.Piece;
 import model.piece.Queen;
 import model.piece.Rook;
+import model.piece.WhitePawn;
 import model.position.Column;
 import model.position.Moving;
 import model.position.Position;
@@ -96,5 +97,29 @@ class ChessBoardTest {
         final ChessBoard chessBoard = new ChessBoard();
 
         assertThat(chessBoard.isKingDie()).isFalse();
+    }
+
+    @DisplayName("해당 위치의 기물을 반환한다")
+    @Test
+    void findPiece() {
+        ChessBoard chessBoard = new ChessBoard();
+
+        assertThat(chessBoard.findPiece(Position.from("a2"))).isEqualTo(new WhitePawn());
+    }
+
+    @DisplayName("해당 위치에 기물이 있으면 true를 반환한다.")
+    @Test
+    void isExistPosition() {
+        ChessBoard chessBoard = new ChessBoard();
+
+        assertThat(chessBoard.isExistPosition(Position.from("a2"))).isTrue();
+    }
+
+    @DisplayName("해당 위치에 기물이 없으면 false를 반환한다.")
+    @Test
+    void isNotExistPosition() {
+        ChessBoard chessBoard = new ChessBoard();
+
+        assertThat(chessBoard.isExistPosition(Position.from("b5"))).isFalse();
     }
 }

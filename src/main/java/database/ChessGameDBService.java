@@ -36,7 +36,7 @@ public class ChessGameDBService {
 
     public void moveUpdate(ChessBoard chessBoard, Moving moving) {
         Piece source = chessBoard.findPiece(moving.getCurrentPosition());
-        if (chessBoard.checkPosition(moving.getNextPosition())) {
+        if (chessBoard.isExistPosition(moving.getNextPosition())) {
             updatePiece(moving.getNextPosition(), source);
         } else {
             savePiece(moving.getNextPosition(), source);

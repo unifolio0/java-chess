@@ -33,6 +33,16 @@ class ChessGameTest {
                 .hasMessage("start를 입력해야 게임이 시작됩니다.");
     }
 
+    @DisplayName("RUNNING 상태가 아닐 때 status 명령어를 사용하면 예외가 발생한다.")
+    @Test
+    void invalidStatus() {
+        final ChessGame chessGame = new ChessGame();
+
+        assertThatThrownBy(chessGame::status)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("start를 입력해야 게임이 시작됩니다.");
+    }
+
     @DisplayName("상태가 END일 때 true값을 반환한다.")
     @Test
     void end() {
