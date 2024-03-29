@@ -1,14 +1,19 @@
 package model;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.HashMap;
 import java.util.Map;
+import model.piece.King;
 import model.piece.Knight;
 import model.piece.Piece;
 import model.piece.Queen;
 import model.piece.Rook;
+import model.position.Column;
 import model.position.Moving;
 import model.position.Position;
+import model.position.Row;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -68,5 +73,28 @@ class ChessBoardTest {
         assertThatThrownBy(() -> chessBoard.move(moving, Camp.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("자신의 기물만 이동 가능합니다.");
+    }
+
+    @DisplayName("King이 잡히면 true를 반환한다.")
+    @Test
+    void isKingDie() {
+        Map<Position, Piece> board = new HashMap<>();
+        board.put(new Position(Column.E, Row.EIGHT), new King(Camp.BLACK));
+        board.put(new Position(Column.D, Row.SIX), new Knight(Camp.WHITE));
+        board.put(new Position(Column.C, Row.FIVE), new King(Camp.WHITE));
+        final ChessBoard chessBoard = new ChessBoard(board);
+
+        Moving moving = new Moving(Position.from("d6"), Position.from("e8"));
+        chessBoard.move(moving, Camp.WHITE);
+
+        assertThat(chessBoard.isKingDie()).isTrue();
+    }
+
+    @DisplayName("King이 잡히지 않으면 false를 반환한다.")
+    @Test
+    void isNotKingDie() {
+        final ChessBoard chessBoard = new ChessBoard();
+
+        assertThat(chessBoard.isKingDie()).isFalse();
     }
 }

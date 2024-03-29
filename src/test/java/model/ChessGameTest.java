@@ -50,19 +50,4 @@ class ChessGameTest {
 
         assertThat(chessGame.isNotEnd()).isTrue();
     }
-
-    /*@DisplayName("King이 잡히면 게임을 종료한다.")
-    @Test
-    void checkKing() {
-        final ChessGame chessGame = new ChessGame();
-        chessGame.start();
-
-        Map<Position, Piece> board = chessGame.getBoard();
-        board.put(Position.from("d6"), new Knight(Camp.WHITE));
-
-        Moving moving = new Moving(Position.from("d6"), Position.from("e8"));
-        chessGame.move(moving);
-
-        assertThat(chessGame.isNotEnd()).isFalse();
-    }*/
 }
