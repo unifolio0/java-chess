@@ -139,7 +139,7 @@ public class ChessBoard {
         return board.get(currentPosition);
     }
 
-    public boolean checkPosition(Position nextPosition) {
+    public boolean isExistPosition(Position nextPosition) {
         return board.containsKey(nextPosition);
     }
 
