@@ -1,6 +1,8 @@
 package database;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,9 +25,8 @@ public class ChessBoardDao {
     }
 
     public void save(Position position, Piece piece) {
-        final var query = "INSERT INTO " + TABLE + " VALUES(?, ?, ?, ?)";
-        try {
-            final var preparedStatement = connection.prepareStatement(query);
+        final String query = "INSERT INTO " + TABLE + " VALUES(?, ?, ?, ?)";
+        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, position.getColumn().getValue());
             preparedStatement.setString(2, position.getRow().getValue());
             preparedStatement.setString(3, piece.getPieceType().name());
@@ -37,10 +38,10 @@ public class ChessBoardDao {
     }
 
     public Map<Position, Piece> findAll() {
-        final var query = "SELECT * FROM " + TABLE;
-        try (final var preparedStatement = connection.prepareStatement(query)) {
+        final String query = "SELECT * FROM " + TABLE;
+        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             Map<Position, Piece> board = new HashMap<>();
-            final var resultSet = preparedStatement.executeQuery();
+            final ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 board.put(Position.from(resultSet.getString("board_column") + resultSet.getString("board_row")),
                         PieceGenerator.getPiece(resultSet.getString("piece_type") + "_" + resultSet.getString("camp")));
@@ -52,9 +53,9 @@ public class ChessBoardDao {
     }
 
     public void update(Position position, Piece piece) {
-        final var query =
+        final String query =
                 "UPDATE " + TABLE + " SET piece_type = ?, camp = ? WHERE board_column = ? AND board_row = ?";
-        try (final var preparedStatement = connection.prepareStatement(query)) {
+        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, piece.getPieceType().name());
             preparedStatement.setString(2, piece.getCamp().name());
             preparedStatement.setString(3, position.getColumn().getValue());
@@ -66,8 +67,8 @@ public class ChessBoardDao {
     }
 
     public void deleteAll() {
-        final var query = "DELETE FROM " + TABLE;
-        try (final var preparedStatement = connection.prepareStatement(query)) {
+        final String query = "DELETE FROM " + TABLE;
+        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
@@ -75,8 +76,8 @@ public class ChessBoardDao {
     }
 
     public void delete(Position position) {
-        final var query = "DELETE FROM " + TABLE + " WHERE board_column = ? AND board_row = ?";
-        try (final var preparedStatement = connection.prepareStatement(query)) {
+        final String query = "DELETE FROM " + TABLE + " WHERE board_column = ? AND board_row = ?";
+        try (final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, position.getColumn().getValue());
             preparedStatement.setString(2, position.getRow().getValue());
             preparedStatement.executeUpdate();
