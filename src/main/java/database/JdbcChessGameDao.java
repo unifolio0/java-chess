@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import model.game.Camp;
 
 public class JdbcChessGameDao {
@@ -21,20 +22,18 @@ public class JdbcChessGameDao {
         }
     }
 
-    public Camp find() {
+    public Optional<Camp> find() {
         final String query = "SELECT * FROM " + TABLE;
         try (final Connection connection = DBConnection.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             final ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                resultSet.close();
-                return Camp.valueOf(resultSet.getString("current_turn"));
+                return Optional.of(Camp.valueOf(resultSet.getString("current_turn")));
             }
-            resultSet.close();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
-        throw new IllegalArgumentException("저장된 기록이 없습니다.");
+        return Optional.empty();
     }
 
     public void update(Camp camp) {

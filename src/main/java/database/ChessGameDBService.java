@@ -17,21 +17,22 @@ public class ChessGameDBService {
         this.jdbcChessGameDao = new JdbcChessGameDao();
     }
 
+    public ChessGameDBService(JdbcChessBoardDao jdbcChessBoardDao, JdbcChessGameDao jdbcChessGameDao) {
+        this.jdbcChessBoardDao = jdbcChessBoardDao;
+        this.jdbcChessGameDao = jdbcChessGameDao;
+    }
+
     public ChessGameDto reload() {
-        return new ChessGameDto(jdbcChessBoardDao.findAll(), jdbcChessGameDao.find());
+        return new ChessGameDto(jdbcChessBoardDao.findAll(), jdbcChessGameDao.find().get());
     }
 
     public boolean isContinue() {
-        return jdbcChessGameDao.find().describeConstable().isPresent();
+        return jdbcChessGameDao.find().isPresent();
     }
 
     public void saveAll(ChessGameDto chessGameDto) {
         jdbcChessBoardDao.saveAll(chessGameDto.board());
         jdbcChessGameDao.save(chessGameDto.camp());
-    }
-
-    private void savePiece(Position position, Piece piece) {
-        jdbcChessBoardDao.save(position, piece);
     }
 
     public void moveUpdate(ChessBoard chessBoard, Moving moving) {
@@ -46,6 +47,10 @@ public class ChessGameDBService {
 
     private void updatePiece(Position position, Piece piece) {
         jdbcChessBoardDao.update(position, piece);
+    }
+
+    private void savePiece(Position position, Piece piece) {
+        jdbcChessBoardDao.save(position, piece);
     }
 
     private void deletePiece(Position position) {
