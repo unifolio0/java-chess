@@ -42,6 +42,7 @@ public class JdbcChessBoardDao {
                 board.put(Position.from(resultSet.getString("board_column") + resultSet.getString("board_row")),
                         PieceGenerator.getPiece(resultSet.getString("piece_type") + "_" + resultSet.getString("camp")));
             }
+            resultSet.close();
             return board;
         } catch (final SQLException e) {
             throw new RuntimeException(e);

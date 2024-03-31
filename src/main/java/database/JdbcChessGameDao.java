@@ -27,8 +27,10 @@ public class JdbcChessGameDao {
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             final ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
+                resultSet.close();
                 return Camp.valueOf(resultSet.getString("current_turn"));
             }
+            resultSet.close();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
