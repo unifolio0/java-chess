@@ -32,7 +32,7 @@ public class JdbcChessGameDao {
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        throw new IllegalArgumentException("저장된 기록이 없습니다.");
     }
 
     public void update(Camp camp) {

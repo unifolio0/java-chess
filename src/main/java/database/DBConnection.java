@@ -23,7 +23,7 @@ public final class DBConnection {
         } catch (final SQLException e) {
             System.err.println("DB 연결 오류:" + e.getMessage());
             e.printStackTrace();
-            return null;
+            throw new IllegalArgumentException("DB연결에 실패했습니다.");
         }
     }
 }
