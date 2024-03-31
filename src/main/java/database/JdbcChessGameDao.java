@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.game.Camp;
 
-public class ChessGameDao {
+public class JdbcChessGameDao {
 
     private static final String TABLE = "chessgame";
 

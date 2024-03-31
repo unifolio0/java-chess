@@ -9,29 +9,29 @@ import model.position.Position;
 
 public class ChessGameDBService {
 
-    private final ChessBoardDao chessBoardDao;
-    private final ChessGameDao chessGameDao;
+    private final JdbcChessBoardDao jdbcChessBoardDao;
+    private final JdbcChessGameDao jdbcChessGameDao;
 
     public ChessGameDBService() {
-        this.chessBoardDao = new ChessBoardDao();
-        this.chessGameDao = new ChessGameDao();
+        this.jdbcChessBoardDao = new JdbcChessBoardDao();
+        this.jdbcChessGameDao = new JdbcChessGameDao();
     }
 
     public ChessGameDto reload() {
-        return new ChessGameDto(chessBoardDao.findAll(), chessGameDao.find());
+        return new ChessGameDto(jdbcChessBoardDao.findAll(), jdbcChessGameDao.find());
     }
 
     public boolean isContinue() {
-        return chessGameDao.find().describeConstable().isPresent();
+        return jdbcChessGameDao.find().describeConstable().isPresent();
     }
 
     public void saveAll(ChessGameDto chessGameDto) {
-        chessBoardDao.saveAll(chessGameDto.board());
-        chessGameDao.save(chessGameDto.camp());
+        jdbcChessBoardDao.saveAll(chessGameDto.board());
+        jdbcChessGameDao.save(chessGameDto.camp());
     }
 
     private void savePiece(Position position, Piece piece) {
-        chessBoardDao.save(position, piece);
+        jdbcChessBoardDao.save(position, piece);
     }
 
     public void moveUpdate(ChessBoard chessBoard, Moving moving) {
@@ -45,19 +45,19 @@ public class ChessGameDBService {
     }
 
     private void updatePiece(Position position, Piece piece) {
-        chessBoardDao.update(position, piece);
+        jdbcChessBoardDao.update(position, piece);
     }
 
     private void deletePiece(Position position) {
-        chessBoardDao.delete(position);
+        jdbcChessBoardDao.delete(position);
     }
 
     public void updateCamp(Camp camp) {
-        chessGameDao.update(camp);
+        jdbcChessGameDao.update(camp);
     }
 
     public void reset() {
-        chessBoardDao.deleteAll();
-        chessGameDao.delete();
+        jdbcChessBoardDao.deleteAll();
+        jdbcChessGameDao.delete();
     }
 }

@@ -10,7 +10,7 @@ import model.piece.Piece;
 import model.piece.PieceGenerator;
 import model.position.Position;
 
-public class ChessBoardDao {
+public class JdbcChessBoardDao {
 
     private static final String TABLE = "chessboard";
 
