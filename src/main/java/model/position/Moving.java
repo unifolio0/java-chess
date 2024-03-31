@@ -3,6 +3,7 @@ package model.position;
 import static model.position.Direction.dColumn;
 import static model.position.Direction.dRow;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -56,7 +57,7 @@ public class Moving {
             Column column = Column.from(currentColumn + (i * dColumn[index]));
             result.add(new Position(column, row));
         }
-        return result;
+        return Collections.unmodifiableSet(result);
     }
 
     private int distance() {
