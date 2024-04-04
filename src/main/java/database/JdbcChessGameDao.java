@@ -24,6 +24,20 @@ public class JdbcChessGameDao {
         }
     }
 
+   /* public Optional<Camp> findCamp() {
+        final String query = "SELECT * FROM " + TABLE;
+        try (final Connection connection = DBConnection.getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return Optional.of(Camp.valueOf(resultSet.getString("current_turn")));
+            }
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return Optional.empty();
+    }*/
+
     public Optional<Camp> findCamp() {
         final String query = "SELECT * FROM " + TABLE;
         try (final Connection connection = DBConnection.getConnection();
@@ -50,20 +64,6 @@ public class JdbcChessGameDao {
             throw new RuntimeException(e);
         }
         return Optional.empty();
-    }
-
-    public void update(Camp camp, ChessStatus chessStatus) {
-        final String query =
-                "UPDATE " + TABLE + " SET current_turn = ?, chessStatus = ? WHERE current_turn = ?";
-        try (final Connection connection = DBConnection.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, camp.name());
-            preparedStatement.setString(2, chessStatus.name());
-            preparedStatement.setString(3, camp.toggle().name());
-            preparedStatement.executeUpdate();
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public void delete() {

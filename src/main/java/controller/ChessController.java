@@ -10,6 +10,7 @@ import view.OutputView;
 
 public class ChessController {
 
+    // TODO : 밑에 Command 받는 부분, BoardDao를 GameDao 필드로 넣기
     private final ChessGameService chessGameService = new ChessGameService(new ChessGameRepo());
 
     public void run() {

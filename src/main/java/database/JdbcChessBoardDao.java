@@ -33,20 +33,6 @@ public class JdbcChessBoardDao {
         }
     }
 
-    public void save(Position position, Piece piece) {
-        final String query = "INSERT INTO " + TABLE + " VALUES(?, ?, ?, ?)";
-        try (final Connection connection = DBConnection.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, position.getColumn().getValue());
-            preparedStatement.setString(2, position.getRow().getValue());
-            preparedStatement.setString(3, piece.getPieceType().name());
-            preparedStatement.setString(4, piece.getCamp().name());
-            preparedStatement.executeUpdate();
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public ChessBoard findAll() {
         final String query = "SELECT * FROM " + TABLE;
         try (final Connection connection = DBConnection.getConnection();
@@ -63,37 +49,10 @@ public class JdbcChessBoardDao {
         }
     }
 
-    public void update(Position position, Piece piece) {
-        final String query =
-                "UPDATE " + TABLE + " SET piece_type = ?, camp = ? WHERE board_column = ? AND board_row = ?";
-        try (final Connection connection = DBConnection.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, piece.getPieceType().name());
-            preparedStatement.setString(2, piece.getCamp().name());
-            preparedStatement.setString(3, position.getColumn().getValue());
-            preparedStatement.setString(4, position.getRow().getValue());
-            preparedStatement.executeUpdate();
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public void deleteAll() {
         final String query = "DELETE FROM " + TABLE;
         try (final Connection connection = DBConnection.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.executeUpdate();
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void delete(Position position) {
-        final String query = "DELETE FROM " + TABLE + " WHERE board_column = ? AND board_row = ?";
-        try (final Connection connection = DBConnection.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, position.getColumn().getValue());
-            preparedStatement.setString(2, position.getRow().getValue());
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
