@@ -1,5 +1,6 @@
 package controller.menu;
 
+import database.ChessGameService;
 import dto.GameBoardDto;
 import model.game.ChessGame;
 import model.position.Moving;
@@ -15,9 +16,13 @@ public class Move implements Menu {
     }
 
     @Override
-    public void play(ChessGame chessGame) {
-        chessGame.move(moving);
+    public void play(ChessGameService chessGameService) {
+        chessGameService.move(moving);
+        ChessGame chessGame = chessGameService.getChessGame();
+
         if (!chessGame.isNotEnd()) {
+            OutputView.printWinner(chessGame.calculateResult().getWinner());
+            chessGameService.reset();
             return;
         }
         printCurrentStatus(chessGame);

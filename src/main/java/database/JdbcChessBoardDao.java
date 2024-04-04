@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import model.game.ChessBoard;
 import model.piece.Piece;
 import model.piece.PieceGenerator;
 import model.position.Position;
@@ -15,7 +17,20 @@ public class JdbcChessBoardDao {
     private static final String TABLE = "chessboard";
 
     public void saveAll(Map<Position, Piece> board) {
-        board.forEach(this::save);
+        final String query = "INSERT INTO " + TABLE + " VALUES(?, ?, ?, ?)";
+        try (final Connection connection = DBConnection.getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            for (Entry<Position, Piece> enetry : board.entrySet()) {
+                preparedStatement.setString(1, enetry.getKey().getColumn().getValue());
+                preparedStatement.setString(2, enetry.getKey().getRow().getValue());
+                preparedStatement.setString(3, enetry.getValue().getPieceType().name());
+                preparedStatement.setString(4, enetry.getValue().getCamp().name());
+                preparedStatement.addBatch();
+            }
+            preparedStatement.executeBatch();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void save(Position position, Piece piece) {
@@ -32,7 +47,7 @@ public class JdbcChessBoardDao {
         }
     }
 
-    public Map<Position, Piece> findAll() {
+    public ChessBoard findAll() {
         final String query = "SELECT * FROM " + TABLE;
         try (final Connection connection = DBConnection.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -42,7 +57,7 @@ public class JdbcChessBoardDao {
                 board.put(Position.from(resultSet.getString("board_column") + resultSet.getString("board_row")),
                         PieceGenerator.getPiece(resultSet.getString("piece_type") + "_" + resultSet.getString("camp")));
             }
-            return board;
+            return new ChessBoard(board);
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }

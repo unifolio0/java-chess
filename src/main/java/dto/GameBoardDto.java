@@ -29,6 +29,15 @@ public class GameBoardDto {
         return new GameBoardDto(chessBoard);
     }
 
+    public static GameBoardDto from(Map<Position, Piece> board) {
+        final String chessBoard = Arrays.stream(Row.values())
+                .map(row -> Arrays.stream(Column.values())
+                        .map(column -> createRow(board, column, row))
+                        .collect(Collectors.joining())
+                ).collect(Collectors.joining(System.lineSeparator()));
+        return new GameBoardDto(chessBoard);
+    }
+
     private static String createRow(final Map<Position, Piece> squarePieces, final Column column, final Row row) {
         final Position square = new Position(column, row);
 

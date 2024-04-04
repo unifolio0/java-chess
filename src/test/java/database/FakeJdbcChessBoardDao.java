@@ -2,6 +2,7 @@ package database;
 
 import java.util.HashMap;
 import java.util.Map;
+import model.game.ChessBoard;
 import model.piece.Piece;
 import model.position.Position;
 
@@ -28,12 +29,12 @@ public class FakeJdbcChessBoardDao extends JdbcChessBoardDao {
         fakeBoard.put(position, piece);
     }
 
-    public Map<Position, Piece> findAll() {
+    public ChessBoard findAll() {
         Map<Position, Piece> board = new HashMap<>();
         for (Position pos : fakeBoard.keySet()) {
             board.put(pos, fakeBoard.get(pos));
         }
-        return board;
+        return new ChessBoard(board);
     }
 
     public void update(Position position, Piece piece) {

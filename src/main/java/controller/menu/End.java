@@ -1,11 +1,10 @@
 package controller.menu;
 
-import model.game.ChessGame;
+import database.ChessGameService;
 
 public class End implements Menu {
 
     @Override
-    public void play(ChessGame chessGame) {
-        chessGame.end();
+    public void play(ChessGameService chessGameService) {
     }
 }

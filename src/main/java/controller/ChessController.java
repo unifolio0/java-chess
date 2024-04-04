@@ -1,29 +1,40 @@
 package controller;
 
 import controller.menu.Menu;
-import java.util.function.Consumer;
-import model.game.ChessGame;
+import database.ChessGameRepo;
+import database.ChessGameService;
+import java.util.List;
 import model.game.Command;
 import view.InputView;
 import view.OutputView;
 
 public class ChessController {
 
+    private final ChessGameService chessGameService = new ChessGameService(new ChessGameRepo());
+
     public void run() {
-        ChessGame chessGame = new ChessGame();
         OutputView.printStartMessage();
-        readWithRetry(this::play, chessGame);
+        play();
     }
 
-    private void play(final ChessGame chessGame) {
-        while (chessGame.isNotEnd()) {
-            Menu menu = Command.of(InputView.readCommandList());
-            menu.play(chessGame);
+    private void play() {
+        List<String> menus = InputView.readCommandList();
+        if (menus.get(0).equals("start")) {
+            Command.of(menus).play(chessGameService);
+        } else {
+            throw new IllegalArgumentException("시작안함");
         }
-        OutputView.printWinner(chessGame.calculateResult().getWinner());
+        while (chessGameService.isContinue()) {
+            menus = InputView.readCommandList();
+            if (menus.get(0).equals("end")) {
+                return;
+            }
+            Menu menu = Command.of(menus);
+            menu.play(chessGameService);
+        }
     }
 
-    private <T> T readWithRetry(final Consumer<ChessGame> consumer, final ChessGame chessGame) {
+    /*private <T> T readWithRetry(final Consumer<ChessGame> consumer) {
         try {
             consumer.accept(chessGame);
         } catch (IllegalArgumentException e) {
@@ -31,5 +42,5 @@ public class ChessController {
             return readWithRetry(consumer, chessGame);
         }
         return null;
-    }
+    }*/
 }

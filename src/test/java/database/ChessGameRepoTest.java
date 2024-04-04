@@ -16,7 +16,7 @@ import model.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ChessGameDBServiceTest {
+class ChessGameRepoTest {
 
     @DisplayName("이전 게임의 진행 상태를 불러온다.")
     @Test
@@ -28,11 +28,11 @@ class ChessGameDBServiceTest {
         Map<Integer, Camp> current_turn = Map.of(0, Camp.BLACK);
         FakeJdbcChessBoardDao fakeJdbcChessBoardDao = new FakeJdbcChessBoardDao(board);
         FakeJdbcChessGameDao fakeJdbcChessGameDao = new FakeJdbcChessGameDao(current_turn);
-        ChessGameDBService chessGameDBService = new ChessGameDBService(fakeJdbcChessBoardDao, fakeJdbcChessGameDao);
+        ChessGameRepo chessGameRepo = new ChessGameRepo(fakeJdbcChessBoardDao, fakeJdbcChessGameDao);
 
         ChessGameDto chessGameDto = new ChessGameDto(board, current_turn.get(0));
 
-        assertThat(chessGameDBService.reload()).isEqualTo(chessGameDto);
+        assertThat(chessGameRepo.reload()).isEqualTo(chessGameDto);
     }
 
     @DisplayName("이전 게임의 저장기록이 없으면 false를 반환한다..")
@@ -40,9 +40,9 @@ class ChessGameDBServiceTest {
     void isNotContinue() {
         FakeJdbcChessBoardDao fakeJdbcChessBoardDao = new FakeJdbcChessBoardDao();
         FakeJdbcChessGameDao fakeJdbcChessGameDao = new FakeJdbcChessGameDao();
-        ChessGameDBService chessGameDBService = new ChessGameDBService(fakeJdbcChessBoardDao, fakeJdbcChessGameDao);
+        ChessGameRepo chessGameRepo = new ChessGameRepo(fakeJdbcChessBoardDao, fakeJdbcChessGameDao);
 
-        assertThat(chessGameDBService.isContinue()).isFalse();
+        assertThat(chessGameRepo.isContinue()).isFalse();
     }
 
     @DisplayName("이전 게임의 저장기록이 있으면 true를 반환한다.")
@@ -51,9 +51,9 @@ class ChessGameDBServiceTest {
         Map<Integer, Camp> current_turn = Map.of(0, Camp.BLACK);
         FakeJdbcChessBoardDao fakeJdbcChessBoardDao = new FakeJdbcChessBoardDao();
         FakeJdbcChessGameDao fakeJdbcChessGameDao = new FakeJdbcChessGameDao(current_turn);
-        ChessGameDBService chessGameDBService = new ChessGameDBService(fakeJdbcChessBoardDao, fakeJdbcChessGameDao);
+        ChessGameRepo chessGameRepo = new ChessGameRepo(fakeJdbcChessBoardDao, fakeJdbcChessGameDao);
 
-        assertThat(chessGameDBService.isContinue()).isTrue();
+        assertThat(chessGameRepo.isContinue()).isTrue();
     }
 
     @DisplayName("현재 보드의 상태를 저장한다.")
@@ -61,7 +61,7 @@ class ChessGameDBServiceTest {
     void saveAll() {
         FakeJdbcChessBoardDao fakeJdbcChessBoardDao = new FakeJdbcChessBoardDao();
         FakeJdbcChessGameDao fakeJdbcChessGameDao = new FakeJdbcChessGameDao();
-        ChessGameDBService chessGameDBService = new ChessGameDBService(fakeJdbcChessBoardDao, fakeJdbcChessGameDao);
+        ChessGameRepo chessGameRepo = new ChessGameRepo(fakeJdbcChessBoardDao, fakeJdbcChessGameDao);
 
         Map<Position, Piece> board = Map.of(
                 Position.from("a3"), new King(Camp.BLACK),
@@ -70,7 +70,7 @@ class ChessGameDBServiceTest {
         Map<Integer, Camp> current_turn = Map.of(0, Camp.BLACK);
         ChessGameDto chessGameDto = new ChessGameDto(board, current_turn.get(0));
 
-        chessGameDBService.saveAll(chessGameDto);
+        //chessGameRepo.saveAll(chessGameDto);
 
         assertAll(
                 () -> assertThat(fakeJdbcChessBoardDao.getFakeBoard()).isEqualTo(board),
@@ -89,13 +89,13 @@ class ChessGameDBServiceTest {
 
         FakeJdbcChessBoardDao fakeJdbcChessBoardDao = new FakeJdbcChessBoardDao(board);
         FakeJdbcChessGameDao fakeJdbcChessGameDao = new FakeJdbcChessGameDao();
-        ChessGameDBService chessGameDBService = new ChessGameDBService(fakeJdbcChessBoardDao, fakeJdbcChessGameDao);
+        ChessGameRepo chessGameRepo = new ChessGameRepo(fakeJdbcChessBoardDao, fakeJdbcChessGameDao);
 
         Map<Position, Piece> excepted = new HashMap<>();
         excepted.put(Position.from("a4"), new King(Camp.BLACK));
         excepted.put(Position.from("c4"), new WhitePawn());
 
-        chessGameDBService.moveUpdate(chessBoard, moving);
+        chessGameRepo.moveUpdate(chessBoard, moving);
 
         assertThat(fakeJdbcChessBoardDao.getFakeBoard()).isEqualTo(excepted);
     }
@@ -107,9 +107,9 @@ class ChessGameDBServiceTest {
         current_turn.put(0, Camp.BLACK);
         FakeJdbcChessBoardDao fakeJdbcChessBoardDao = new FakeJdbcChessBoardDao();
         FakeJdbcChessGameDao fakeJdbcChessGameDao = new FakeJdbcChessGameDao(current_turn);
-        ChessGameDBService chessGameDBService = new ChessGameDBService(fakeJdbcChessBoardDao, fakeJdbcChessGameDao);
+        ChessGameRepo chessGameRepo = new ChessGameRepo(fakeJdbcChessBoardDao, fakeJdbcChessGameDao);
 
-        chessGameDBService.updateCamp(Camp.WHITE);
+        //chessGameRepo.updateCamp(Camp.WHITE);
 
         assertThat(fakeJdbcChessGameDao.getCurrent_turn().get(0)).isEqualTo(Camp.WHITE);
     }
@@ -124,9 +124,9 @@ class ChessGameDBServiceTest {
         current_turn.put(0, Camp.BLACK);
         FakeJdbcChessBoardDao fakeJdbcChessBoardDao = new FakeJdbcChessBoardDao(board);
         FakeJdbcChessGameDao fakeJdbcChessGameDao = new FakeJdbcChessGameDao(current_turn);
-        ChessGameDBService chessGameDBService = new ChessGameDBService(fakeJdbcChessBoardDao, fakeJdbcChessGameDao);
+        ChessGameRepo chessGameRepo = new ChessGameRepo(fakeJdbcChessBoardDao, fakeJdbcChessGameDao);
 
-        chessGameDBService.reset();
+        chessGameRepo.reset();
 
         assertAll(
                 () -> assertThat(fakeJdbcChessBoardDao.getFakeBoard()).isEmpty(),

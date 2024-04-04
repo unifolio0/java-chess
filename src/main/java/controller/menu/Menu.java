@@ -1,8 +1,8 @@
 package controller.menu;
 
-import model.game.ChessGame;
+import database.ChessGameService;
 
 public interface Menu {
 
-    void play(ChessGame chessGame);
+    void play(ChessGameService chessGameService);
 }

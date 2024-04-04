@@ -24,7 +24,7 @@ public class FakeJdbcChessGameDao extends JdbcChessGameDao {
         index++;
     }
 
-    public Optional<Camp> find() {
+    public Optional<Camp> findCamp() {
         if (!current_turn.isEmpty()) {
             return Optional.ofNullable(current_turn.get(index - 1));
         }
